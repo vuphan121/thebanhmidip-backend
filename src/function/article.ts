@@ -79,4 +79,9 @@ export async function get_articles_by_article_id_issue(id: string): Promise<Arti
     return allInSameIssue;
 }
 
+export async function get_issue_by_id(id: string): Promise<Issue | null> {
+    const issueTable = new SupabaseTable<Issue>('issue', API_URL, API_KEY);
+    const issue = await issueTable.get_row_by_id(id);
+    return issue ?? null;
+}
 
