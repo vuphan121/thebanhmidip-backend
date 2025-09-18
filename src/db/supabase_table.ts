@@ -11,9 +11,17 @@ export class SupabaseTable<T extends Record<string, any>> {
         this.apiKey = apiKey;
     }
 
-    public async get_data(): Promise<T[]> {
+    public async get_data(filters: Partial<T> = {}): Promise<T[]> {
         try {
-            const query = `${this.apiUrl}?select=*&order=created_at.desc`;
+            const queryParams = new URLSearchParams();
+            
+            for (const [key, value] of Object.entries(filters)) {
+                queryParams.append(`${key}`, `eq.${value}`);
+            }
+            
+            queryParams.append('order', 'created_at.desc');
+
+            const query = `${this.apiUrl}?select=*&${queryParams.toString()}`;
 
             const res = await fetch(query, {
                 headers: {
@@ -32,6 +40,7 @@ export class SupabaseTable<T extends Record<string, any>> {
             throw error;
         }
     }
+
 
     public async get_row_by_id(id: string): Promise<T | null> {
         try {
