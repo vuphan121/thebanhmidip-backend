@@ -54,11 +54,21 @@ app.get('/api/issues/:id', async (req: Request, res: Response) => {
 
     try {
         const articles = await get_articles_by_article_id_issue(id);
-        if (!articles) {
+        if (!articles || articles.length === 0) {
             return res.status(404).json({ error: 'No issue found for this article' });
         }
 
-        res.json({ articles });
+        const issueId = articles[0].issue_id!;
+        const issue = await get_issue_by_id(issueId);
+
+        if (!issue) {
+            return res.status(404).json({ error: 'Issue not found' });
+        }
+
+        res.json({
+            intro: issue.intro,
+            articles
+        });
     } catch (err) {
         console.error('Failed to fetch issue by article ID:', err);
         res.status(500).json({ error: 'Internal server error' });
