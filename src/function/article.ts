@@ -9,6 +9,8 @@ export type Article = {
   image_name: string;
   title_link?: string;
   created_at?: string;
+  image_source_name?: string;
+  image_source_link?: string;
 };
 
 const API_URL = process.env.SUPABASE_API_URL!;
