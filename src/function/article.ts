@@ -46,17 +46,18 @@ async function saveArticle(
 }
 
 export async function get_article_data(): Promise<
-    Pick<Article, 'id' | 'title' | 'summary' | 'image_name' | 'created_at'>[]
+    Pick<Article, 'id' | 'title' | 'summary' | 'image_name' | 'created_at' | 'issue_id' >[]
 > {
     const articleTable = new SupabaseTable<Article>('article', API_URL, API_KEY)
     const allArticles = await articleTable.get_data()
 
-    return allArticles.map(({ id, title, summary, image_name, created_at }) => ({
+    return allArticles.map(({ id, title, summary, image_name, created_at, issue_id }) => ({
         id,
         title,
         summary,
         image_name,
-        created_at
+        created_at,
+        issue_id
     }))
 }
 
