@@ -41,18 +41,25 @@ async function saveArticle(
     }
 }
 
-export async function get_article_data(): Promise<Pick<Article, 'id' | 'title' | 'content' | 'summary' | 'image_name' | 'created_at'>[]> {
-    const articleTable = new SupabaseTable<Article>('article', API_URL, API_KEY);
-    const allArticles = await articleTable.get_data();
+export async function get_article_data(): Promise<
+    Pick<Article, 'id' | 'title' | 'summary' | 'image_name' | 'created_at'>[]
+> {
+    const articleTable = new SupabaseTable<Article>('article', API_URL, API_KEY)
+    const allArticles = await articleTable.get_data()
 
-    return allArticles.map(({ id, title, content , summary, image_name, created_at}) => ({
+    return allArticles.map(({ id, title, summary, image_name, created_at }) => ({
         id,
         title,
-        content,
         summary,
         image_name,
         created_at
-    }));
+    }))
+}
+
+export async function get_article_by_id(id: string): Promise<Article | null> {
+    const articleTable = new SupabaseTable<Article>('article', API_URL, API_KEY)
+    const result = await articleTable.get_row_by_id(id)
+    return result ?? null
 }
 
 
