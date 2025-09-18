@@ -33,6 +33,29 @@ export class SupabaseTable<T extends Record<string, any>> {
         }
     }
 
+    public async get_row_by_id(id: string): Promise<T | null> {
+        try {
+            const query = `${this.apiUrl}?id=eq.${encodeURIComponent(id)}&limit=1`;
+
+            const res = await fetch(query, {
+                headers: {
+                    apikey: this.apiKey,
+                    Authorization: `Bearer ${this.apiKey}`,
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error(`Fetch by ID failed: ${res.status} ${res.statusText}`);
+            }
+
+            const data = await res.json();
+            return data.length > 0 ? data[0] : null;
+        } catch (error) {
+            console.error(`Error fetching ${this.tableName} by ID:`, error);
+            throw error;
+        }
+    }
+
     public async add_row(row: T): Promise<T[]> {
         try {
             const res = await fetch(this.apiUrl, {
