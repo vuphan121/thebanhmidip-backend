@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import {get_article_data, get_article_by_id, get_articles_by_article_id_issue} from "./function/article";
+import {get_article_data, get_article_by_id, get_articles_by_article_id_issue, get_issue_by_id} from "./function/article";
 import {get_image} from "./function/article_image";
 // import {trackRequest} from "./function/api_tracker";
 
