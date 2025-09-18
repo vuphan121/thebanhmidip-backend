@@ -49,7 +49,7 @@ app.get('/api/article-image/:filename', async (req, res) => {
 
 
 // @ts-ignore
-app.get('/api/issues/from-article/:id', async (req: Request, res: Response) => {
+app.get('/api/issues/:id', async (req: Request, res: Response) => {
     const { id } = req.params;
 
     try {
