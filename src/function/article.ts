@@ -14,6 +14,11 @@ export type Article = {
     image_source_link?: string;
 };
 
+type Issue = {
+    id: string;
+    intro: string;
+};
+
 
 const API_URL = process.env.SUPABASE_API_URL!;
 const API_KEY = process.env.SUPABASE_API_KEY!;
