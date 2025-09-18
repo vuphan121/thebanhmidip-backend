@@ -2,12 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import {get_article_data} from "./function/article";
 import {get_image} from "./function/article_image";
+import {trackRequest} from "./function/api_tracker";
 
 const app = express();
 app.use(cors());
 
 app.get('/api/articles', async (_, res) => {
     try {
+        await trackRequest();
         const data = await get_article_data();
         res.json(data);
     } catch (err) {
@@ -19,6 +21,7 @@ app.get('/api/article-image/:filename', async (req, res) => {
     const { filename } = req.params;
 
     try {
+        await trackRequest();
         const blob = await get_image(filename);
         const buffer = Buffer.from(await blob.arrayBuffer());
 
@@ -34,4 +37,3 @@ app.get('/api/article-image/:filename', async (req, res) => {
 app.listen(3001, () => {
     console.log('Server running');
 });
-
