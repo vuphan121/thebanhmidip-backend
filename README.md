@@ -178,4 +178,4 @@ curl http://localhost:3001/api/issues/1
   "error": "Internal server error"
 }
 ```
-ect is open-source and available under the [MIT License](LICENSE).
+
